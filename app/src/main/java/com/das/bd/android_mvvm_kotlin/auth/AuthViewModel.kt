@@ -2,6 +2,7 @@ package com.das.bd.android_mvvm_kotlin.auth
 
 import android.view.View
 import androidx.lifecycle.ViewModel
+import com.das.bd.android_mvvm_kotlin.data.repositories.UserRepository
 
 class AuthViewModel : ViewModel() {
 
@@ -10,12 +11,14 @@ class AuthViewModel : ViewModel() {
 
     var authListener: AuthListener? = null
 
-    fun onLoginButtonClick(view: View) {
+
+    fun onLoginButtonClick(view: View){
         authListener?.onStarted()
-        if (email.isNullOrEmpty() || password.isNullOrEmpty()) {
+        if(email.isNullOrEmpty() || password.isNullOrEmpty()){
             authListener?.onFailure("Invalid email or password")
             return
         }
-        authListener?.onSuccess()
+        val loginResponse = UserRepository().userLogin(email!!, password!!)
+        authListener?.onSuccess(loginResponse)
     }
 }
