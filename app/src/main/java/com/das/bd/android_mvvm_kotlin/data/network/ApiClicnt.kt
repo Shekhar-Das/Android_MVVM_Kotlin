@@ -1,8 +1,8 @@
 package com.das.bd.android_mvvm_kotlin.data.network
 
 
-import okhttp3.ResponseBody
-import retrofit2.Call
+import com.das.bd.android_mvvm_kotlin.data.network.responses.AuthResponse
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Field
@@ -13,14 +13,14 @@ interface ApiClicnt {
 
     @FormUrlEncoded
     @POST("login")
-    fun userLogin(
+    suspend fun userLogin(
         @Field("email") email: String,
         @Field("password") password: String
-    ) : Call<ResponseBody>
+    ): Response<AuthResponse>
 
 
-    companion object{
-        operator fun invoke() : ApiClicnt{
+    companion object {
+        operator fun invoke(): ApiClicnt {
             return Retrofit.Builder()
                 .baseUrl("https://api.simplifiedcoding.in/course-apis/mvvm/")
                 .addConverterFactory(GsonConverterFactory.create())

@@ -1,17 +1,14 @@
 package com.das.bd.android_mvvm_kotlin.data.repositories
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.das.bd.android_mvvm_kotlin.data.network.ApiClicnt
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
+import com.das.bd.android_mvvm_kotlin.data.network.responses.AuthResponse
 import retrofit2.Response
 
 class UserRepository {
-    fun userLogin(email: String, password: String) : LiveData<String> {
+   suspend fun userLogin(email: String, password: String) : Response<AuthResponse> {
+        return ApiClicnt().userLogin(email , password)
 
-        val loginResponse = MutableLiveData<String>()
+       /* val loginResponse = MutableLiveData<String>()
 
         ApiClicnt().userLogin(email, password)
             .enqueue(object: Callback<ResponseBody>{
@@ -29,7 +26,7 @@ class UserRepository {
 
             })
 
-        return loginResponse
+        return loginResponse*/
     }
 
 
