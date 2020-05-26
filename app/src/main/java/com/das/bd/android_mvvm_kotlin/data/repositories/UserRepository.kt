@@ -1,36 +1,18 @@
 package com.das.bd.android_mvvm_kotlin.data.repositories
 
+import com.das.bd.android_mvvm_kotlin.data.db.AppDatabase
+import com.das.bd.android_mvvm_kotlin.data.db.entities.User
 import com.das.bd.android_mvvm_kotlin.data.network.ApiClicnt
 import com.das.bd.android_mvvm_kotlin.data.network.SafeApiRequest
 import com.das.bd.android_mvvm_kotlin.data.network.responses.AuthResponse
-import retrofit2.Response
 
-class UserRepository : SafeApiRequest(){
+class UserRepository(private val api :ApiClicnt,private val db:AppDatabase) : SafeApiRequest(){
    suspend fun userLogin(email: String, password: String) : AuthResponse {
-       return apiRequest { ApiClicnt().userLogin(email , password)  }
-
-
-       /* val loginResponse = MutableLiveData<String>()
-
-        ApiClicnt().userLogin(email, password)
-            .enqueue(object: Callback<ResponseBody>{
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    loginResponse.value = t.message
-                }
-
-                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                    if(response.isSuccessful){
-                        loginResponse.value = response.body()?.string()
-                    }else{
-                        loginResponse.value = response.errorBody()?.string()
-                    }
-                }
-
-            })
-
-        return loginResponse*/
+       return apiRequest { api.userLogin(email , password)  }
     }
+    suspend fun saveUser(user : User) = db.getUserDao().upsert(user)
 
+    fun getUser() = db.getUserDao().getUser()
 
 }
 

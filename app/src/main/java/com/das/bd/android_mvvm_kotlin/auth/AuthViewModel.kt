@@ -6,12 +6,14 @@ import com.das.bd.android_mvvm_kotlin.data.repositories.UserRepository
 import com.das.bd.android_mvvm_kotlin.util.ApiException
 import com.das.bd.android_mvvm_kotlin.util.Coroutines
 
-class AuthViewModel : ViewModel() {
+class AuthViewModel( private val userRepository: UserRepository) : ViewModel() {
 
     var email: String? = null
     var password: String? = null
 
     var authListener: AuthListener? = null
+
+    fun getLoggInUser() = userRepository.getUser()
 
 
     fun onLoginButtonClick(view: View){
@@ -22,9 +24,10 @@ class AuthViewModel : ViewModel() {
         }
         Coroutines.main {
             try {
-                val authResponse = UserRepository().userLogin(email!! , password!!)
+                val authResponse = userRepository.userLogin(email!! , password!!)
                 authResponse.user?.let {
                     authListener?.onSuccess(it)
+                    userRepository.saveUser(it)
                     return@main
                 }
                 authListener?.onFailure(authResponse.message!!)
