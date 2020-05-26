@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="viewModel"
+            name="viewmodel"
             type="com.das.bd.android_mvvm_kotlin.auth.AuthViewModel" />
     </data>
 
@@ -34,8 +34,8 @@
             android:id="@+id/ed_user_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.email}"
-            android:hint="email@gmail.com"
+            android:text="@={viewmodel.email}"
+            android:hint="belal@gmail.com"
             android:paddingTop="10dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -43,7 +43,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_user_password"
-            android:text="@{viewModel.password}"
+            android:text="@={viewmodel.password}"
             android:hint="password"
             android:inputType="textPassword"
             android:layout_width="match_parent"
@@ -57,7 +57,7 @@
             android:id="@+id/materialButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{viewModel.onLoginButtonClick}"
+            android:onClick="@{viewmodel::onLoginButtonClick}"
             android:text="Login"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -68,6 +68,7 @@
             android:layout_height="wrap_content"
             android:visibility="invisible"
             android:gravity="center"
+            android:layout_gravity="center_horizontal|center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
