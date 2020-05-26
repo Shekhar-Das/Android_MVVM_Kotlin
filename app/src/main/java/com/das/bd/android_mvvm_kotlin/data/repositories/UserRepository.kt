@@ -1,12 +1,14 @@
 package com.das.bd.android_mvvm_kotlin.data.repositories
 
 import com.das.bd.android_mvvm_kotlin.data.network.ApiClicnt
+import com.das.bd.android_mvvm_kotlin.data.network.SafeApiRequest
 import com.das.bd.android_mvvm_kotlin.data.network.responses.AuthResponse
 import retrofit2.Response
 
-class UserRepository {
-   suspend fun userLogin(email: String, password: String) : Response<AuthResponse> {
-        return ApiClicnt().userLogin(email , password)
+class UserRepository : SafeApiRequest(){
+   suspend fun userLogin(email: String, password: String) : AuthResponse {
+       return apiRequest { ApiClicnt().userLogin(email , password)  }
+
 
        /* val loginResponse = MutableLiveData<String>()
 
