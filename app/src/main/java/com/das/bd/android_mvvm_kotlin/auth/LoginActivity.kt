@@ -11,6 +11,7 @@ import com.das.bd.android_mvvm_kotlin.R
 import com.das.bd.android_mvvm_kotlin.data.db.AppDatabase
 import com.das.bd.android_mvvm_kotlin.data.db.entities.User
 import com.das.bd.android_mvvm_kotlin.data.network.ApiClicnt
+import com.das.bd.android_mvvm_kotlin.data.network.NetworkConnectionInterceptor
 import com.das.bd.android_mvvm_kotlin.data.repositories.UserRepository
 import com.das.bd.android_mvvm_kotlin.databinding.ActivityLoginBinding
 import com.das.bd.android_mvvm_kotlin.util.hide
@@ -23,8 +24,8 @@ class LoginActivity : AppCompatActivity(), AuthListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val api = ApiClicnt()
+        val networkConnectionInterceptor = NetworkConnectionInterceptor(this)
+        val api = ApiClicnt(networkConnectionInterceptor)
         val db = AppDatabase(this)
         val userRepository = UserRepository(api ,db)
         val factory = AuthViewModelFactory(userRepository)
@@ -36,7 +37,7 @@ class LoginActivity : AppCompatActivity(), AuthListener {
         val viewModel = ViewModelProvider(this,factory).get(AuthViewModel::class.java)
         binding.viewmodel = viewModel
 
-        // current class contains our authLinseter
+        // current class contains our authListener
         viewModel.authListener = this
         viewModel.getLoggInUser().observe(this, Observer {user ->
             if (user !=null){

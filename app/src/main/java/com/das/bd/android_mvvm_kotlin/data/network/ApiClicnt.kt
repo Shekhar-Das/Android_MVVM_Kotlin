@@ -2,6 +2,7 @@ package com.das.bd.android_mvvm_kotlin.data.network
 
 
 import com.das.bd.android_mvvm_kotlin.data.network.responses.AuthResponse
+import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -20,8 +21,12 @@ interface ApiClicnt {
 
 
     companion object {
-        operator fun invoke(): ApiClicnt {
+        operator fun invoke(networkConnectionInterceptor: NetworkConnectionInterceptor ): ApiClicnt {
+            val okHttpClient = OkHttpClient.Builder()
+                .addInterceptor(networkConnectionInterceptor)
+                .build()
             return Retrofit.Builder()
+                .client(okHttpClient)
                 .baseUrl("https://api.simplifiedcoding.in/course-apis/mvvm/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
