@@ -19,6 +19,15 @@ interface ApiClicnt {
         @Field("password") password: String
     ): Response<AuthResponse>
 
+    // user signup
+    @FormUrlEncoded
+    @POST("signup")
+    suspend fun ueserSignup(
+        @Field("name") name: String,
+        @Field("email") email: String,
+        @Field("password") password: String
+    ): Response<AuthResponse>
+
 
     companion object {
         operator fun invoke(networkConnectionInterceptor: NetworkConnectionInterceptor ): ApiClicnt {

@@ -3,6 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.das.bd.android_mvvm_kotlin.auth.AuthViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -30,7 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:hint="User Name"
+            android:text="@={viewmodel.name}"
+            android:hint="Full Name"
             app:layout_constraintTop_toBottomOf="@id/iv_title"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -41,7 +47,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:hint="User Password"
+            android:text="@={viewmodel.email}"
+            android:hint="Email"
             app:layout_constraintTop_toBottomOf="@id/ed_user_name"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -52,7 +59,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:hint="User Full Name"
+            android:text="@={viewmodel.password}"
+            android:hint="user password"
             app:layout_constraintTop_toBottomOf="@id/ed_user_password"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -63,7 +71,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:hint="User Age"
+            android:text="@={viewmodel.passwordconfirm}"
+            android:hint="confirm password"
             app:layout_constraintTop_toBottomOf="@id/ed_user_full_name"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -72,6 +81,7 @@
             android:id="@+id/btn_submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="@{viewmodel::onSignupButtonClick}"
             android:text="register"
             android:background="@android:color/holo_blue_bright"
             app:layout_constraintTop_toBottomOf="@id/ed_user_name_age"
