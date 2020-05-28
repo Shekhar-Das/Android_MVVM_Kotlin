@@ -19,16 +19,25 @@ import com.das.bd.android_mvvm_kotlin.util.show
 import com.das.bd.android_mvvm_kotlin.util.snackbar
 import com.das.bd.android_mvvm_kotlin.util.toast
 import kotlinx.android.synthetic.main.activity_login.*
+import org.kodein.di.Kodein
+import org.kodein.di.android.kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.generic.instance
 
-class LoginActivity : AppCompatActivity(), AuthListener {
+class LoginActivity : AppCompatActivity(), AuthListener , KodeinAware {
+
+    override val kodein by kodein()
+    private val factory by instance<AuthViewModelFactory>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val networkConnectionInterceptor = NetworkConnectionInterceptor(this)
+
+        // titet couplling remove instance of we use android dependency
+       /* val networkConnectionInterceptor = NetworkConnectionInterceptor(this)
         val api = ApiClicnt(networkConnectionInterceptor)
         val db = AppDatabase(this)
         val userRepository = UserRepository(api ,db)
-        val factory = AuthViewModelFactory(userRepository)
+        val factory = AuthViewModelFactory(userRepository)*/
 
         // set databinding information here
         val binding: ActivityLoginBinding =
